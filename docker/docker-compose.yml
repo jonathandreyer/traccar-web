@@ -1,0 +1,35 @@
+version: '3'
+
+networks:
+  traccar-base-net:
+    driver: bridge
+
+services:
+  traccar-app:
+    image: traccar/traccar:5.3-alpine
+    container_name: traccar-app
+    ports:
+      - "5055:5055"
+      - "8082:8082"
+    networks:
+      - traccar-base-net
+
+  traccar-ui-dev:
+    build:
+      context: ../modern
+      dockerfile: ../docker/Dockerfile
+    container_name: traccar-ui-dev
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - traccar-base-net
+    volumes:
+      - ./../modern:/usr/src/app/ui
+      - /usr/src/app/ui/node_modules
+      - /usr/src/app/ui/build
+      - ./../web:/usr/src/app/web
+    environment:
+      - REACT_APP_URL_NAME=traccar-app:8082
+    depends_on:
+      - traccar-app
