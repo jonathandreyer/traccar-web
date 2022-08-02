@@ -23,4 +23,6 @@
     <entry key='database.user'>sa</entry>
     <entry key='database.password'></entry>
 
+    <entry key='protocols.enable'>osmand</entry>
+
 </properties>
