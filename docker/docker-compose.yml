@@ -13,6 +13,8 @@ services:
       - "8082:8082"
     networks:
       - traccar-base-net
+    volumes:
+      - ./../docker/traccar.xml:/opt/traccar/conf/traccar.xml:ro
 
   traccar-ui-dev:
     build:
